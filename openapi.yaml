@@ -101,7 +101,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponse"
+                $ref: "#/components/schemas/Register"
         "405":
           description: Invalid input
       security:
