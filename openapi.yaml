@@ -122,7 +122,6 @@ paths:
                 $ref: "#/components/schemas/BillboardArray"
       security:
         - token: []
-  /biilboard:
     post:
       tags:
         - Biilboard
