@@ -1,0 +1,459 @@
+openapi: 3.0.3
+info:
+  title: Dokumen API Cloud Function - OpenAPI 3.0
+  description: >-
+    Dokumen API Cloud Function Aplikasi Inventory Management Warehouse
+  termsOfService: https://github.com/alnoviantirs/swagger
+  contact:
+    email: ramadhanialnovianti@gmail.com
+  license:
+    name: Warehouse Package
+    url: https://pkg.go.dev/github.com/Fatwaff/be_ksi
+  version: 1.0.11
+externalDocs:
+  description: Repo GCF
+  url: https://ksi-billboard.github.io/gcf/
+servers:
+  - url: https://asia-southeast2-keamanansistem.cloudfunctions.net
+tags:
+  - name: User
+    description: Data User
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: https://ksi-billboard.github.io/gcf/user/
+  - name: Auth
+    description: Auth to Access to API
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: https://ksi-billboard.github.io/gcf/login/
+  - name: Register
+    description: Register to Access to API
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: https://ksi-billboard.github.io/gcf/register/
+  - name: Billboard
+    description: Billboard to Access to API
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: https://ksi-billboard.github.io/gcf/billboard/
+  - name: Sewa
+    description: Sewa to Access to API
+    externalDocs:
+      description: Deskripsi dan Kode Program
+      url: https://ksi-billboard.github.io/gcf/sewa/
+paths:
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get All User
+      description: List Data User
+      operationId: getUserJSON
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid status value
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Login get Token
+      description: Login and Get User Token
+      operationId: authService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "405":
+          description: Invalid input
+      security:
+        - token: []
+  /register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      description: Register
+      operationId: authService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Register"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "405":
+          description: Invalid input
+      security:
+        - token: []
+  /biilboard:
+    get:
+      tags:
+        - Billboard
+      summary: Get All Billboard
+      description: List Data Billboard
+      operationId: getAllBillboard
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BillboardArray"
+      security:
+        - token: []
+    post:
+      tags:
+        - Biilboard
+      summary: Create Billboard
+      description: Create a new Billboard
+      operationId: createBillboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Billboard"
+      responses:
+        "201":
+          description: Billboard created successfully
+        "400":
+          description: Invalid input
+      security:
+        - token: []
+  /billboard?id={billboardId}:
+    get:
+      tags:
+        - Billboard
+      summary: Get Billboard by ID
+      description: Get a Billboard by its ID
+      operationId: getBillboardById
+      parameters:
+        - name: billboardId
+          in: path
+          required: false
+          schema:
+            type: string
+          description: ID of the Billboard
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Billboard"
+        "404":
+          description: Billboard not found
+      security:
+        - token: []
+    put:
+      tags:
+        - Billboard
+      summary: Update Billboard
+      description: Update an existing Billboard
+      operationId: updateBillboard
+      parameters:
+        - name: billboardId
+          in: path
+          required: false
+          schema:
+            type: string
+          description: ID of the Billboard
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Billboard"
+      responses:
+        "200":
+          description: Billboard updated successfully
+        "404":
+          description: Billboard not found
+      security:
+        - token: []
+    delete:
+      tags:
+        - Billboard
+      summary: Delete Billboard
+      description: Delete an existing Billboard
+      operationId: deleteBillboard
+      parameters:
+        - name: billboardId
+          in: path
+          required: false
+          schema:
+            type: string
+          description: ID of the Billboard
+      responses:
+        "200":
+          description: Billboard deleted successfully
+        "404":
+          description: Billboard not found
+      security:
+        - token: []
+  /sewa:
+    get:
+      tags:
+        - Sewa
+      summary: Get All Sewa
+      description: List Data Sewa
+      operationId: getAllSewa
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SewaArray"
+      security:
+        - token: []
+    post:
+      tags:
+        - Sewa
+      summary: Create Sewa
+      description: Create a new Sewa
+      operationId: createSewa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Sewa"
+      responses:
+        "201":
+          description: Sewa created successfully
+        "400":
+          description: Invalid input
+      security:
+        - token: []
+  /sewa/{sewaId}:
+    get:
+      tags:
+        - Sewa
+      summary: Get Sewa by ID
+      description: Get a Sewa by its ID
+      operationId: getSewaById
+      parameters:
+        - name: sewaId
+          in: path
+          required: false
+          schema:
+            type: string
+          description: ID of the Sewa
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sewa"
+        "404":
+          description: Sewa not found
+      security:
+        - token: []
+    put:
+      tags:
+        - Sewa
+      summary: Update Sewa
+      description: Update an existing Sewa
+      operationId: updateSewa
+      parameters:
+        - name: sewaId
+          in: path
+          required: false
+          schema:
+            type: string
+          description: ID of the Sewa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Sewa"
+      responses:
+        "200":
+          description: Sewa updated successfully
+        "404":
+          description: Sewa not found
+      security:
+        - token: []
+    delete:
+      tags:
+        - Sewa
+      summary: Delete Sewa
+      description: Delete an existing Sewa
+      operationId: deleteSewa
+      parameters:
+        - name: sewaId
+          in: path
+          required: false
+          schema:
+            type: string
+          description: ID of the Sewa
+      responses:
+        "200":
+          description: Sewa deleted successfully
+        "404":
+          description: Sewa not found
+      security:
+        - token: []
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        ID:
+          type: string
+          format: uuid
+        NamaLengkap:
+          type: string
+        Email:
+          type: string
+          format: email
+        Password:
+          type: string
+        Confirmpassword:
+          type: string
+        NoHp:
+          type: string
+        KTP:
+          type: string
+        Gambar:
+          type: string
+        Salt:
+          type: string
+    Login:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    Register:
+      type: object
+      properties:
+        NamaLengkap:
+          type: string
+        Email:
+          type: string
+        Password:
+          type: string
+        Confirmpassword:
+          type: string
+        KTP:
+          type: string
+    Billboard:
+      type: object
+      properties:
+        ID:
+          type: string
+          format: uuid
+        Kode:
+          type: string
+        Nama:
+          type: string
+        Gambar:
+          type: string
+        Panjang:
+          type: string
+        Lebar:
+          type: string
+        Harga:
+          type: string
+        Latitude:
+          type: string
+        Longitude:
+          type: string
+        Address:
+          type: string
+        Regency:
+          type: string
+        District:
+          type: string
+        Village:
+          type: string
+
+    BillboardArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Billboard"
+
+    Sewa:
+      type: object
+      properties:
+        ID:
+          type: string
+          format: uuid
+        Billboard:
+          type: Billboard
+        User:
+          type: User
+        Content:
+          type: string
+        TanggalMulai:
+          type: string
+        TanggalSelesai:
+          type: string
+        Status:
+          type: boolean
+
+    SewaArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/Sewa"
+
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: boolean
+        token:
+          type: string
+        message:
+          type: string
+        role:
+          type: string
+  requestBodies:
+    AuthReq:
+      description: Request Authentication
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Login"
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/AuthResponse"
+
+  securitySchemes:
+    token:
+      type: apiKey
+      name: Authorization
+      in: header
