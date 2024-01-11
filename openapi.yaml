@@ -86,7 +86,7 @@ paths:
   /register:
     post:
       tags:
-        - Auth
+        - Register
       summary: Register
       description: Register
       operationId: authService
