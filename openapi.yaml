@@ -46,8 +46,8 @@ paths:
     get:
       tags:
         - User
-      summary: Get All User
-      description: List Data User
+      summary: Get Profil
+      description: Data Profil
       operationId: getUserJSON
       responses:
         "200":
@@ -60,6 +60,8 @@ paths:
                   $ref: "#/components/schemas/User"
         "400":
           description: Invalid status value
+      security:
+        - token: []
   /login:
     post:
       tags:
@@ -81,8 +83,6 @@ paths:
                 $ref: "#/components/schemas/AuthResponse"
         "405":
           description: Invalid input
-      security:
-        - token: []
   /register:
     post:
       tags:
@@ -104,8 +104,6 @@ paths:
                 $ref: "#/components/schemas/Register"
         "405":
           description: Invalid input
-      security:
-        - token: []
   /billboard:
     get:
       tags:
@@ -120,8 +118,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BillboardArray"
-      security:
-        - token: []
     post:
       tags:
         - Billboard
@@ -327,18 +323,11 @@ components:
           type: string
         Email:
           type: string
-          format: email
-        Password:
-          type: string
-        Confirmpassword:
-          type: string
         NoHp:
           type: string
         KTP:
           type: string
         Gambar:
-          type: string
-        Salt:
           type: string
     Login:
       type: object
@@ -361,9 +350,11 @@ components:
           type: string
         Password:
           type: string
-        Confirmpassword:
+        Confirmpass:
           type: string
         KTP:
+          type: string
+        NoHP:
           type: string
     Billboard:
       type: object
